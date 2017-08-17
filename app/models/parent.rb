@@ -1,5 +1,6 @@
 class Parent<ActiveRecord::Base
-    has_and_belongs_to_many :childs
+    has_many :child_parents
+    has_many :children, through: :child_parents
     has_secure_password
 
     def slug

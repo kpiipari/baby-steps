@@ -5,7 +5,7 @@ describe 'Parent' do
     @parent = Parent.create(:username => "daddy Mike", :email => "parent@example.com", :password => "test")
   end
   it 'can slug the username' do
-    expect(@user.slug).to eq("daddy-mike")
+    expect(@parent.slug).to eq("daddy-mike")
   end
 
   it 'can find a user based on the slug' do
@@ -15,8 +15,8 @@ describe 'Parent' do
 
   it 'has a secure password' do
 
-    expect(@user.authenticate("baby")).to eq(false)
-    expect(@user.authenticate("test")).to eq(@user)
+    expect(@parent.authenticate("baby")).to eq(false)
+    expect(@parent.authenticate("test")).to eq(@parent)
 
   end
 end
