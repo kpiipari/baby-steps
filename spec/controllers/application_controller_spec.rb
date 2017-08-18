@@ -87,7 +87,7 @@ describe ApplicationController do
       expect(last_response.status).to eq(302)
       follow_redirect!
       expect(last_response.status).to eq(200)
-      expect(last_response.body).to include("Welcome to your Baby Step's account")
+      expect(last_response.body).to include("Welcome back #{parent.username}!")
     end
 
     it 'does not let user view login page if already logged in' do
@@ -121,8 +121,8 @@ describe ApplicationController do
       expect(last_response.location).to include("/")
     end
 
-    it "does not load /parent if a parent is not logged in" do
-      get "/parent"
+    it "does not load /parent/:slug if a parent is not logged in" do
+      get '/parent/:slug'
       expect(last_response.location).to include("/login")
     end
 
