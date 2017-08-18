@@ -1,0 +1,13 @@
+<h1>Welcome to Baby Steps, <%= parent.username %></h1>
+
+<h3>Children</h3>
+
+<h4>Add a child</h4>
+
+<form action="/create-child" method="POST">
+    <label>Name</label>
+    <input type="text" name="name"><br><br>
+    <label>Date of Birth</label>
+    <input type="text" name="dob"><br><br>
+    <input type="submit">
+</form>
