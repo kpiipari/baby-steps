@@ -1,0 +1,17 @@
+<h1><%= @child.name %> - <%= @child.dob %></h1>
+
+<h2>Milestones</h2>
+
+<% if @child.milestones.empty?%>
+    <p>You have not added any milestones yet.<p>
+<% else @child.milestones.each do |milestone|%>
+        <p><%= milestone.content %></p>
+        <p>At <%= milestone.age %></p>
+        <p>On <%= milestone.date %></p>
+    <% end %>
+<% end %>
+<a href="/create-milestone">Add a milestone<a/><br>
+
+<br>
+
+<a href="/parent/:slug">Return to homepage<a/>

@@ -4,12 +4,12 @@
 
 <% if @parent.children.empty?%>
     <p>You have not added any children yet.<p>
-    <a href="/create-child">Add a child<a/><br>
 <% else @parent.children.each do |child|%>
-        <p><%= child.name %></p>
+        <a href="/child/#{child.slug}"><%= child.name %></a>
         <p>DOB: <%= child.dob %></p>
     <% end %>
 <% end %>
+<a href="/create-child">Add a child<a/><br>
 
 <br>
 
