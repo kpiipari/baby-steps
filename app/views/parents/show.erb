@@ -2,15 +2,15 @@
 
 <h3>Children</h3>
 
-<h4>Add a child</h4>
+<% if @parent.children.empty?%>
+    <p>You have not added any children yet.<p>
+    <a href="/create-child">Add a child<a/><br>
+<% else @parent.children.each do |child|%>
+        <p><%= child.name %></p>
+        <p>DOB: <%= child.dob %></p>
+    <% end %>
+<% end %>
 
-<form action="/create-child" method="POST">
-    <label>Name</label>
-    <input type="text" name="name"><br><br>
-    <label>Date of Birth</label>
-    <input type="text" name="dob"><br><br>
-    <input type="submit">
-</form>
 <br>
 
 <a href="/logout">Log Out<a/>

@@ -1,15 +1,18 @@
+require './config/environment'
+
 class ApplicationController < Sinatra::Base
   include Helpers
 
     configure do
-    set :public_folder, 'public'
-    set :views, 'app/views'
-    set :session_secret, "babystep_secret"
+
+      enable :method_override
+      enable :sessions
+
+      set :public_folder, 'public'
+      set :views, 'app/views'
+      set :session_secret, "babystep_secret"
     
   end
-
-  enable :method_override
-  enable :sessions
 
   get '/' do
     erb :index
@@ -56,7 +59,7 @@ class ApplicationController < Sinatra::Base
 
   get '/logout' do
     if logged_in?(session)
-      binding.pry
+      #binding.pry
       session.clear
     end
     redirect to "/login"
