@@ -59,7 +59,6 @@ class ApplicationController < Sinatra::Base
 
   get '/logout' do
     if logged_in?(session)
-      #binding.pry
       session.clear
     end
     redirect to "/login"
