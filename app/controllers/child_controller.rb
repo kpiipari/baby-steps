@@ -24,12 +24,14 @@ class ChildController < ApplicationController
 
     get '/child/:slug' do
         if logged_in?(session)
-            parent = current_parent(session)
-            @child = parent.children.find_by(:name => params[:slug].capitalize)
+            #binding.pry
+            @parent = current_parent(session)
+            @child = @parent.children.find_by(:name => params[:slug].capitalize)
             erb :'children/show'
         else
             redirect to "/login"
         end
     end
+
 
 end

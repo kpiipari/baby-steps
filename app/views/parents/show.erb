@@ -5,7 +5,7 @@
 <% if @parent.children.empty?%>
     <p>You have not added any children yet.<p>
 <% else @parent.children.each do |child|%>
-        <a href="/child/#{child.slug}"><%= child.name %></a>
+        <a href="/child/<%= child.slug %>"><%= child.name %></a>
         <p>DOB: <%= child.dob %></p>
     <% end %>
 <% end %>

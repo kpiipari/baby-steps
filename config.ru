@@ -7,5 +7,6 @@ end
 
 use ParentController
 use ChildController
+use MilestoneController
 use Rack::MethodOverride
 run ApplicationController

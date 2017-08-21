@@ -1,6 +1,6 @@
 <h1>Create a new milestone</h1>
 
-<form action="/create-milestone" method="POST">
+<form action="/child/<%= @child.slug %>/create-milestone" method="POST">
     <label>Milestone</label>
     <input type="text" name="content"><br><br>
     <label>Date</label>

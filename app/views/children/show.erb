@@ -5,13 +5,20 @@
 <% if @child.milestones.empty?%>
     <p>You have not added any milestones yet.<p>
 <% else @child.milestones.each do |milestone|%>
-        <p><%= milestone.content %></p>
-        <p>At <%= milestone.age %></p>
-        <p>On <%= milestone.date %></p>
+        <h4><%= milestone.content %></h4>
+        <% if !milestone.age.empty? && !milestone.date.nil? %>
+            <p>At <%= milestone.age %></p>
+            <p>On <%= milestone.date %></p>
+        <% elsif !milestone.age.empty? %>
+            <p>At <%= milestone.age %></p>
+        <% elsif !milestone.date.nil? %>
+            <p>On <%= milestone.date %></p>
+        <% end %>
+        <p>******************</p>
     <% end %>
 <% end %>
-<a href="/create-milestone">Add a milestone<a/><br>
+<a href="/child/<%= @child.slug %>/create-milestone">Add a milestone<a/><br>
 
 <br>
 
-<a href="/parent/:slug">Return to homepage<a/>
+<a href="/parent/<%= @parent.slug %>">Return to homepage<a/>
