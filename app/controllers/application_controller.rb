@@ -28,8 +28,11 @@ class ApplicationController < Sinatra::Base
 
   post '/signup' do
     parent = Parent.new(params)
+  
     if parent.username == "" || parent.email == "" || parent.password == ""
       redirect to "/signup"
+    elsif Parent.find_by(:username => parent.username) && Parent.find_by(:email => parent.email)
+      redirect to "/login"
     elsif parent.save
       session[:id] = parent.id
       redirect to "/parent/#{current_parent(session).slug}"
