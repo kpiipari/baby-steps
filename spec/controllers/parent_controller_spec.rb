@@ -59,10 +59,5 @@ describe ParentController do
      
             expect page.has_link? ("/child/#{child1.slug}")
         end
-
-
-    end
-
-
-    
+    end   
 end
