@@ -1,0 +1,20 @@
+<h2>Edit Milestone</h2>
+
+<form action="/child/<%= @child.slug%>/edit-milestone" method="POST">
+<input type="hidden" id="hidden" name="_method" value="patch">
+
+    <label>Edit Content</label>
+    <input type="text" value="<%= @milestone.content %>" name="content"><br><br>
+    <label>Edit Date</label>
+    <input type="date" value="<%= @milestone.date %>" name="date"><br><br>
+    <label>Edit Age</label>
+    <input type="text" value="<%= @cmilestone.age %>" name="age"><br><br>
+    <button id="submit" type="submit">Edit</button>
+</form>
+
+<h2>Delete</h2>
+
+<form action="/child/<%= @child.slug%>" method="POST">
+    <input type="hidden" id="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete Milestone">
+</form>

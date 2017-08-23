@@ -13,8 +13,8 @@ module Helpers
     end
   end
 
-  def current_child(id)
-    Child.find(id)
+  def current_child(slug)
+    Child.find_by_slug(params[:slug]).name
   end
 
   def current_milestone(id)

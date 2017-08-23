@@ -56,7 +56,7 @@ describe ChildController do
             :password => "tiger"
             }
             post '/login', params
-            
+
             child = Child.create(:name => "Benny", :dob => "15/03/2016")
             milestone = Milestone.create(:content => "first steps", :date => "10-09-2016", :age => "13 months")
             child.milestones << milestone
@@ -67,5 +67,23 @@ describe ChildController do
             expect(last_response.body).to include("On 2016-09-10")
             expect(last_response.body).to include("At 13 months")
         end
-    end    
+    end
+    
+    describe 'Parent can edit children and milestones' do
+
+        it 'lets a parent to edit the name and dob of a child'
+            parent = Parent.create(:username => "daddyo", :email => "daddycool@example.com", :password => "tiger")
+            params = {
+            :username => "daddyo",
+            :password => "tiger"
+            }
+            post '/login', params
+
+            child = Child.create(:name => "Benny", :dob => "15/03/2016")
+
+            get '/child/:slug/edit'
+
+            
+
+    end
 end
