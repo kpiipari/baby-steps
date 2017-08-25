@@ -13,7 +13,6 @@ class ChildController < ApplicationController
     end
 
     post '/create-child' do
-        #binding.pry
         new_child = Child.new(params)
         if new_child.name == "" || new_child.dob == ""
             redirect to "/create-child"

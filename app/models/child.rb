@@ -1,4 +1,5 @@
 class Child<ActiveRecord::Base
+    auto_strip_attributes :name
     has_many :child_parents
     has_many :parents, through: :child_parents
     has_many :milestones

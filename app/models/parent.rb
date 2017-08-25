@@ -1,4 +1,5 @@
 class Parent<ActiveRecord::Base
+    auto_strip_attributes :username, :email, :password
     has_many :child_parents
     has_many :children, through: :child_parents
     has_secure_password

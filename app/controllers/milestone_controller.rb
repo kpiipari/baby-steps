@@ -73,19 +73,17 @@ class MilestoneController < ApplicationController
     end
 
     delete '/child/:slug/milestone/:id' do
-        binding.pry
-        if logged_in?(session)
-            @parent = current_parent(session)
+        @parent = current_parent(session)
+        @child = Child.find_by_slug(params[:slug])
+        @milestone = @child.milestones.find_by(:id => params["id"])
+        
+        @child_parent = ChildParent.find_by(:child_id => @child.id)
 
-            @child = @parent.children.find_by(:name => current_child(slug))
-            @child_parent = ChildParent.find_by(:child_id => @child.id)
-
-            if @child_parent.parent_id == @parent.id
-                @child.delete
-                redirect to "/parent/#{@parent.slug}"
-            else
-                redirect to "/login"
-            end
+        if @child_parent.parent_id == @parent.id
+            @child.delete
+            redirect to "/parent/#{@parent.slug}"
+        else
+            redirect to "/login"
         end
     end
 end
