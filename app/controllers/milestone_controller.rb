@@ -7,63 +7,80 @@ class MilestoneController < ApplicationController
     get '/child/:slug/create-milestone' do
         if logged_in?(session)
             @child = Child.find_by_slug(params[:slug])
-            erb :'mielstones/create_milestone'
+            erb :'milestones/create_milestone'
         else
             redirect to "/login"
         end
     end
 
     post '/child/:slug/create-milestone' do
-        new_milestone = Milestone.new(:content => params[:content], :date => params[:date], :age => params[:age])
+        @new_milestone = Milestone.new(:content => params[:content], :date => params[:date], :age => params[:age])
         parent = current_parent(session)
-        child = parent.children.find_by(:name => params[:slug].capitalize) 
-        if new_milestone.content == "" && new_milestone.date == "" || new_milestone.age == ""
+        @child = parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name) 
+        if @new_milestone.content == "" && @new_milestone.date == "" || @new_milestone.age == ""
             redirect to "/child/#{child.slug}/create-milestone"
-        elsif new_milestone.save
-            child.milestones << new_milestone
-            redirect to "/child/#{child.slug}"
+        elsif @new_milestone.save
+            @child.milestones << @new_milestone
+            redirect to "/child/#{@child.slug}"
         else
             redirect to "/signup"
         end
     end
 
-    get '/child/:slug/edit-milestone' do
+    get '/child/:slug/milestone/:id' do
         if logged_in?(session)
             @parent = current_parent(session)
-            @child = @parent.children.find_by(:name => current_child(slug))
+            @child = @parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name)
+            @milestone = @child.milestones.find_by(:id => params["id"].to_i)
+            redirect to "/child/#{@child.slug}"
+        else
+            redirect to "/login"
+        end
+    end
+
+    get '/child/:slug/milestone/:id/edit' do
+        if logged_in?(session)
+            @parent = current_parent(session)
+            @child = @parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name)
+            @milestone = @child.milestones.find_by(:id => params["id"].to_i)
+             
             erb :'milestones/edit_milestone'
         else
             redirect to "/login"
         end
     end
 
-    patch '/child/:slug' do
-        @child = Child.find_by(:name => current_child(slug))
-        binding.pry
+    patch '/child/:slug/milestone/:id' do
+        @parent = current_parent(session)
+        @child = Child.find_by_slug(params[:slug])
+        @milestone = @child.milestones.find_by(:id => params["id"])
+        
         @child_parent = ChildParent.find_by(:child_id => @child.id)
 
-        if @child_parent.parent_id == @parent_id
-            if params["name"] != "" || params["dob"] != ""
-                @child.name = params["name"]
-                @child.dob = params["dob"]
-                @child.save
-                redirect to "/child/#{child.slug}"
+        if @child_parent.parent_id == @parent.id
+            if params["content"] != "" && params["date"] != "" || params["age"] != ""
+                @milestone.content = params["content"]
+                @milestone.date = params["date"]
+                @milestone.age = params["age"]
+                @milestone.save
+                redirect to "/child/#{@child.slug}"
             else
-                redirect to "/child/#{child.slug}.edit"
+                redirect to "/child/#{@child.slug}/milestone/:id/edit"
             end
         else
             redirect to "/login"
         end
     end
 
-    delete '/child/:slug' do
+    delete '/child/:slug/milestone/:id' do
         binding.pry
         if logged_in?(session)
             @parent = current_parent(session)
+
             @child = @parent.children.find_by(:name => current_child(slug))
             @child_parent = ChildParent.find_by(:child_id => @child.id)
 
-            if @child_parent.parent_id == @parent_id
+            if @child_parent.parent_id == @parent.id
                 @child.delete
                 redirect to "/parent/#{@parent.slug}"
             else
@@ -71,5 +88,4 @@ class MilestoneController < ApplicationController
             end
         end
     end
-
 end

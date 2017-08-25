@@ -21,6 +21,8 @@ GEM
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (8.0.0)
+    auto_strip_attributes (2.1.0)
+      activerecord (>= 3.0)
     bcrypt (3.1.11)
     bond (0.5.1)
     capybara (2.15.1)
@@ -111,6 +113,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  auto_strip_attributes (~> 2.1)
   bcrypt
   capybara
   database_cleaner!

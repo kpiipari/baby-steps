@@ -5,6 +5,9 @@ Baby steps allows parents to track their children's developmental milestones suc
 ## Installation
 
 Fork or clone the repo from [here](https://github.com/kpiipari/baby-steps).
+Run `bundle install`
+Run `rake db:migrate`
+Run `shotgun`
 
 ## Step I - Sign Up
 
@@ -19,3 +22,7 @@ Add a child to the account by following the 'Add a child' link on account homepa
 Navigate to a child's page and add a milestone by entering a brief description and a date and/or the age for the milestone.
 
 View all added milestones on a child's homepage.
+
+## License
+
+Released under the [MIT license](https://opensource.org/licenses/mit-license.php)
