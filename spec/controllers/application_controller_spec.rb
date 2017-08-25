@@ -63,7 +63,9 @@ describe ApplicationController do
         :email => "daddycool@example.com",
         :password => "tiger"
       }
-      post '/login', params 
+      post '/signup', params 
+      session = {}
+      session[:id] = parent.id 
       get '/signup'
       expect(last_response.location).to include("/parent/daddyo")
     end
@@ -96,7 +98,7 @@ describe ApplicationController do
       }
       post '/login', params
       session = {}
-      session[:parent_id] = parent.id 
+      session[:id] = parent.id 
       get '/login'
       expect(last_response.location).to include("/parent/daddyo")
     end

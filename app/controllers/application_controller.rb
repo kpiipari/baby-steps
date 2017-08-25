@@ -20,7 +20,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/signup' do
-    if logged_in?(session)
+    @parent = Parent.find_by(:id => session[:id])
+    if logged_in?(session) && !@parent.nil?
       redirect to "/parent/#{current_parent(session).slug}"
     else
       erb :'parents/create_parent'
@@ -29,11 +30,8 @@ class ApplicationController < Sinatra::Base
 
   post '/signup' do
     parent = Parent.new(params)
-  
     if parent.username == "" || parent.email == "" || parent.password == ""
       redirect to "/signup"
-    elsif Parent.find_by(:username => parent.username) && Parent.find_by(:email => parent.email)
-      redirect to "/login"
     elsif parent.save
       session[:id] = parent.id
       redirect to "/parent/#{current_parent(session).slug}"
@@ -43,7 +41,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/login' do
-    if logged_in?(session)
+    @parent = Parent.find_by(:id => session[:id])
+    if logged_in?(session) && !@parent.nil?
       redirect to "/parent/#{current_parent(session).slug}"
     else
       erb :'parents/login'

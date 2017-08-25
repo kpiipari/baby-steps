@@ -46,7 +46,6 @@ class ChildController < ApplicationController
     end
 
     patch '/child/:slug' do
-        #binding.pry
         @parent = current_parent(session)
         @child = @parent.children.find_by(:name => current_child(params[:slug]).name)
         @child_parent = ChildParent.find_by(:child_id => @child.id)

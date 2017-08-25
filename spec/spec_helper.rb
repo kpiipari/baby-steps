@@ -16,6 +16,7 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.include Rack::Test::Methods
   config.include Capybara::DSL
+  config.include Helpers
   DatabaseCleaner.strategy = :truncation
 
   config.before do

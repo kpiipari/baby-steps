@@ -18,7 +18,7 @@ class MilestoneController < ApplicationController
         parent = current_parent(session)
         @child = parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name) 
         if @new_milestone.content == "" && @new_milestone.date == "" || @new_milestone.age == ""
-            redirect to "/child/#{child.slug}/create-milestone"
+            redirect to "/child/#{@child.slug}/create-milestone"
         elsif @new_milestone.save
             @child.milestones << @new_milestone
             redirect to "/child/#{@child.slug}"
@@ -78,9 +78,8 @@ class MilestoneController < ApplicationController
         @milestone = @child.milestones.find_by(:id => params["id"])
         
         @child_parent = ChildParent.find_by(:child_id => @child.id)
-
         if @child_parent.parent_id == @parent.id
-            @child.delete
+            @milestone.delete
             redirect to "/parent/#{@parent.slug}"
         else
             redirect to "/login"
