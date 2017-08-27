@@ -1,0 +1,6 @@
+Build an MVC Sinatra Application [X]
+Use ActiveRecord with Sinatra [X]
+Use Multiple Models [X]
+Use at least one `has_many` relationship [X]
+Must have user accounts [X]
+You should validate user input to ensure that bad data isn't created [X]
