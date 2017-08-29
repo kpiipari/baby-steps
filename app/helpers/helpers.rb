@@ -1,18 +1,11 @@
 module Helpers
 
-  def current_parent(session)
-    if session[:id] != nil && Parent.ids.include?(session[:id])
-      Parent.find(session[:id])
-    else
-      return nil
-    end
+  def current_parent
+    @current_parent ||= Parent.find_by(:id => session[:parent_id]) if session[:parent_id]
   end
 
-  def logged_in?(session)
-    if session[:id] != nil && current_parent(session) != nil
-      parent_id = current_parent(session).id
-      session[:id] == parent_id ? true : false
-    end
+  def logged_in?
+    !!current_parent
   end
 
   def current_child(slug)

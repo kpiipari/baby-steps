@@ -3,6 +3,8 @@ class Parent<ActiveRecord::Base
     has_many :child_parents
     has_many :children, through: :child_parents
     has_secure_password
+    validates :email, :username, presence: true
+    validates :email, :username, uniqueness: true
 
     def slug
         self.username.downcase.gsub(" ", "-")

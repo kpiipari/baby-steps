@@ -5,7 +5,7 @@ class MilestoneController < ApplicationController
     enable :method_override
 
     get '/child/:slug/create-milestone' do
-        if logged_in?(session)
+        if logged_in?
             @child = Child.find_by_slug(params[:slug])
             erb :'milestones/create_milestone'
         else
@@ -15,8 +15,7 @@ class MilestoneController < ApplicationController
 
     post '/child/:slug/create-milestone' do
         @new_milestone = Milestone.new(:content => params[:content], :date => params[:date], :age => params[:age])
-        parent = current_parent(session)
-        @child = parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name) 
+        @child = current_parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name) 
         if @new_milestone.content == "" && @new_milestone.date == "" || @new_milestone.age == ""
             redirect to "/child/#{@child.slug}/create-milestone"
         elsif @new_milestone.save
@@ -28,10 +27,9 @@ class MilestoneController < ApplicationController
     end
 
     get '/child/:slug/milestone/:id' do
-        if logged_in?(session)
-            @parent = current_parent(session)
-            @child = @parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name)
-            @milestone = @child.milestones.find_by(:id => params["id"].to_i)
+        if logged_in?
+            @child = current_parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name)
+            @milestone = @child.milestones.find_by(:id => params[:id])
             redirect to "/child/#{@child.slug}"
         else
             redirect to "/login"
@@ -39,10 +37,10 @@ class MilestoneController < ApplicationController
     end
 
     get '/child/:slug/milestone/:id/edit' do
-        if logged_in?(session)
-            @parent = current_parent(session)
+        if logged_in?
+            @parent = current_parent
             @child = @parent.children.find_by(:name => Child.find_by_slug(params[:slug]).name)
-            @milestone = @child.milestones.find_by(:id => params["id"].to_i)
+            @milestone = @child.milestones.find_by(:id => params[:id])
              
             erb :'milestones/edit_milestone'
         else
@@ -51,7 +49,7 @@ class MilestoneController < ApplicationController
     end
 
     patch '/child/:slug/milestone/:id' do
-        @parent = current_parent(session)
+        @parent = current_parent
         @child = Child.find_by_slug(params[:slug])
         @milestone = @child.milestones.find_by(:id => params["id"])
         
@@ -73,7 +71,7 @@ class MilestoneController < ApplicationController
     end
 
     delete '/child/:slug/milestone/:id' do
-        @parent = current_parent(session)
+        @parent = current_parent
         @child = Child.find_by_slug(params[:slug])
         @milestone = @child.milestones.find_by(:id => params["id"])
         
